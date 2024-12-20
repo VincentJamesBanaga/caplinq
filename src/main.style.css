@@ -1,0 +1,77 @@
+html,
+head,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+}
+
+#app > main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #7b7b7b;
+}
+
+#app > main > label {
+  cursor: pointer;
+}
+
+button {
+  color: #7b7b7b;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  background: white;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+button:not(.primary):hover {
+  color: #007bff;
+  border: 1px solid #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  transition: all 0.3s;
+}
+
+button.primary {
+  color: white;
+  background: #3e4760;
+  border-color: #3e4760;
+}
+
+button.primary:hover {
+  background: rgba(62, 71, 96, 0.88);
+  border-color: rgba(62, 71, 96, 0.88);
+  transition: all 0.3s;
+}
+
+input {
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+}
+
+input:focus-visible {
+  outline: none !important;
+  border: 1px solid #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.product-selected {
+  color: #c4c4c4;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  background: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 14px;
+}
