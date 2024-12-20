@@ -1,77 +1,53 @@
+// Style
+import './accordion.style.css';
+
+// Image
+import image from '../../assets/image.png';
+
+// Components
+import List from '../list/List';
+
 class Accordion {
-    constructor(container, items) {
-        this.container = container;
-        this.items = items;
+    constructor() {
         this.activeIndex = null;
-        this.accordion = this.createAccordion;
+        this.accordion = this.createAccordion({});
     }
 
-    createAccordion() {
+    createAccordion({ items = [] }) {
         const accordion = document.createElement('div');
         accordion.classList.add('accordion');
-        accordion.innerHTML = this.items.map(this.createAccordionItem).join('');
-
-        // Events
-        const headers = accordion.querySelectorAll('.accordion-header');
-        headers.forEach((header) => {
-            header.addEventListener('click', () => {
-                const index = parseInt(header.dataset.index);
-                this.toggleItem(index);
-            });
-        });
-
+        accordion.innerHTML = items.map((item, index) => this.createAccordionItem(item, index)).join('');
         return accordion;
     }
 
     createAccordionItem(item, index) {
+        const list = new List({ items: item.childProducts, checkbox: true, input: true });
         return `
-            <div class="accordion-item">
-                <button class="accordion-header" data-index="${index}">
-                    ${item.title}
-                    <span class="accordion-icon">+</span>
-                </button>
+            <div class="accordion-item" data-index="${index}">
+                <div class="accordion-header">
+                    <div class="accordion-details">
+                        <div class="accordion-logo">
+                            <img class="accordion-image" src="${image}" alt="logo" />
+                        </div>
+                        <div class="accordion-info">
+                            <span class="accordion-name">${item.name}</span>
+                            <span class="accordion-id">SKU: ${item.id}</span>
+                        </div>
+                    </div>
+                    <span class="accordion-icon">&#8250;</span>
+                </div>
                 <div class="accordion-content">
-                    ${item.content}
+                    ${list.render()}
                 </div>
             </div>
         `;
     }
 
-
-    toggleItem(index) {
-        if (this.activeIndex === index) this.closeItem(index);
-        else {
-            if (this.activeIndex !== null) this.closeItem(this.activeIndex);
-            this.openItem(index);
-        }
-    }
-
-    openItem(index) {
-        const elements = this.getItemElements(index);
-        elements.header.classList.add('active');
-        elements.content.classList.add('active');
-        elements.icon.textContent = '-';
-        this.activeIndex = index;
-    }
-
-    closeItem(index) {
-        const elements = this.getItemElements(index);
-        elements.header.classList.remove('active');
-        elements.content.classList.remove('active');
-        elements.icon.textContent = '+';
-        this.activeIndex = null;
-    }
-
-    getItemElements(index) {
-        return {
-            header: this.container.querySelectorAll('.accordion-header')[index],
-            content: this.container.querySelectorAll('.accordion-content')[index],
-            icon: this.container.querySelectorAll('.accordion-icon')[index]
-        };
-    }
-
-    render() {
-        return
+    render(props = {}) {
+        this.accordion = this.createAccordion(props);
+        return this.accordion.outerHTML;
     }
 
 }
+
+export default Accordion;

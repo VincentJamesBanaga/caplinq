@@ -59,10 +59,13 @@
 }
 
 .modal-body .modal-content {
-  flex: 1;
+  position: relative;
   overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
+  padding: 0px 20px;
 }
 
 .modal-body .modal-footer {

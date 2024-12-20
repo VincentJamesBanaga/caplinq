@@ -2,27 +2,40 @@
 import './list.style.css';
 
 class List {
-    constructor({ items = [] }) {
-        this.searchValue = '';
+    constructor({ items = [], checkbox = false, input = false }) {
         this.items = items;
+        this.checkbox = checkbox;
+        this.input = input;
+        this.searchValue = '';
         this.ul = this.createListItems();
     }
 
     createListItems() {
         const ul = document.createElement('ul');
         ul.classList.add('list-items');
-        this.filteredItems().forEach(({ name }) => {
-            const li = this.createListItem(name);
+        this.filteredItems().forEach((items) => {
+            const li = this.createListItem(items);
             ul.appendChild(li);
         });
 
         return ul;
     }
 
-    createListItem(name) {
+    createListItem({ id, name, sku }) {
         const li = document.createElement('li');
+        li.setAttribute('data-id', id);
+        li.setAttribute('data-name', name);
         li.classList.add('list-item');
-        li.innerHTML = `<span>${name}</span> <span>&#8250;</span>`;
+        li.innerHTML = `
+            <div class="list-details">
+                ${this.checkbox ? `<input type="checkbox"  class="list-checkbox" />` : ''}
+                <div class="list-info">
+                    <span class="list-name">${name}</span>
+                    ${sku ? `<span class="list-id">SKU: ${sku}</span>` : ''}
+                </div>
+            </div>
+            ${this.input ? `<input type="number" max='100' min='0' class="list-input" />` : `<span>&#8250;</span>`}
+        `;
         return li;
     }
 
@@ -34,7 +47,7 @@ class List {
 
     render() {
         this.ul = this.createListItems();
-        return this.ul;
+        return this.ul.outerHTML;
     }
 }
 

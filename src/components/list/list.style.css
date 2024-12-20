@@ -1,6 +1,6 @@
 .list-items {
-  padding: 10px 20px;
   margin: 0;
+  padding: 0;
 }
 .list-items:empty::before {
   content: "No results found";
@@ -21,6 +21,41 @@
   list-style-type: none;
   color: #3e4760;
   font-size: 14px;
+}
+
+.list-items > .list-item .list-details {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.list-items > .list-item input[type="number"] {
+  width: 40px !important;
+  height: 3px !important;
+  text-align: right;
+  -moz-appearance: textfield;
+}
+
+.list-items > .list-item input[type="number"]::-webkit-outer-spin-button,
+.list-items > .list-item input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.list-items > .list-item .list-name {
+  color: #3e4760;
+  font-size: 14px;
+}
+
+.list-items > .list-item .list-id {
+  color: #7b7b7b;
+  font-size: 12px;
+}
+
+.list-items > .list-item .list-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .list-items > .list-item > span:nth-child(2) {

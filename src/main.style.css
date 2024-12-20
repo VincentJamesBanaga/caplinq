@@ -52,7 +52,7 @@ button.primary:hover {
   transition: all 0.3s;
 }
 
-input {
+input:not([type="checkbox"]):not([type="radio"]) {
   border: 1px solid #c4c4c4;
   border-radius: 3px;
   padding: 10px;
