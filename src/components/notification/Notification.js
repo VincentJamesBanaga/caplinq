@@ -12,7 +12,7 @@ class Notification {
         notification.classList.add(`${type}`);
 
         const messageElement = document.createElement("span");
-        messageElement.innerText = message;
+        messageElement.innerHTML = message;
 
         const closeButton = document.createElement("span");
         closeButton.innerHTML = "&times;";

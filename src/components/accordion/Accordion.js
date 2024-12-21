@@ -15,17 +15,17 @@ class Accordion {
         this.accordion = this.createAccordion({});
     }
 
-    createAccordion({ items = [] }) {
+    createAccordion({ items = [], selected = [] }) {
         const accordion = document.createElement('div');
         accordion.classList.add('accordion');
-        accordion.innerHTML = this.filteredItems(items).map((item, index) => this.createAccordionItem(item, index)).join('');
+        accordion.innerHTML = this.filteredItems(items).map((item, index) => this.createAccordionItem(item, selected, index)).join('');
         return accordion;
     }
 
-    createAccordionItem(item, index) {
-        const list = new List({ items: item.childProducts, checkbox: true, input: true });
+    createAccordionItem(item, selected, index) {
+        const list = new List({ items: item.childProducts, selected, checkbox: true, input: true });
         return `
-            <div class="accordion-item" data-index="${index}">
+            <div class="accordion-item" data-index="${index}" data-id="${item.id}" data-sku="${item.sku}">
                 <div class="accordion-header">
                     <div class="accordion-details">
                         <div class="accordion-logo">
@@ -36,7 +36,10 @@ class Accordion {
                             <span class="accordion-id">SKU: ${item.id}</span>
                         </div>
                     </div>
-                    ${this.droppable ? `<span class="accordion-icon">&#8250;</span>` : `<input type="number" min='0' readonly="true" value="${item?.qty ?? 0}" class="list-input" />`}
+                    ${this.droppable ? `<span class="accordion-icon">&#8250;</span>` : `<div class="accordion-actions">
+                        <input type="number" min='0' readonly="true" value="${item?.qty ?? 0}" class="list-input" /> 
+                        <span class="list-delete fa">&#xf014;</span>
+                    </div>`}
                 </div>
                 ${this.droppable ? `<div class="accordion-content">${list.render()}</div>` : ``}
             </div>
