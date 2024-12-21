@@ -32,8 +32,8 @@ class Accordion {
                             <img class="accordion-image" src="${image}" alt="logo" />
                         </div>
                         <div class="accordion-info">
-                            <span class="accordion-name">${item.name}</span>
-                            <span class="accordion-id">SKU: ${item.id}</span>
+                            <span class="accordion-name">${this.droppable ? item.name : `<b>${item.sku}</b>`}</span>
+                            <span class="accordion-id">${this.droppable ? `SKU: ${item.sku ? item.sku : item.id}` : `${item.name}`}</span>
                         </div>
                     </div>
                     ${this.droppable ? `<span class="accordion-icon">&#8250;</span>` : `<div class="accordion-actions">
