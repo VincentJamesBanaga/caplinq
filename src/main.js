@@ -5,6 +5,7 @@ import './main.style.css';
 import Modal from './components/modal/Modal';
 import List from './components/list/List';
 import Accordion from './components/accordion/Accordion';
+import Notification from './components/notification/Notification';
 
 // Data
 import suppliers from './data/suppliers';
@@ -38,7 +39,7 @@ class App {
             onBack: () => {
                 switch (this.page) {
                     case 'browse':
-                        this.POModal.modal.querySelector('.search-input').classList.remove('hide');
+                        //
                         break;
                     case 'products':
                         this.POModal.modal.querySelector('.search-input').classList.remove('hide');
@@ -49,6 +50,7 @@ class App {
                     case 'selection':
                         this.page = 'products';
                         this.POModal.modal.querySelector('.modal-title').innerHTML = this.selectedSupplier.name;
+                        this.POModal.modal.querySelector('.search-input').classList.remove('hide');
                         this.bindProducts();
                         break;
                     default:
@@ -57,7 +59,13 @@ class App {
 
             },
             onSubmit: () => {
-                const productItems = this.POModal.modal.querySelectorAll('.list-item');
+                const productItems = this.POModal.modal.querySelectorAll('.accordion .list-item');
+                if (this.page === 'selection') {
+                    this.showNotification('success', 'Add successfully');
+                    this.POModal.hide();
+                    return
+                }
+
                 if (productItems.length) {
                     const productSelected = Array.from(productItems).reduce((data, item) => {
                         if (item.querySelector('.list-checkbox:checked')) {
@@ -71,12 +79,17 @@ class App {
                         return data;
                     }, []);
 
-                    if (!productSelected.length) return
+                    if (!productSelected.length) {
+                        this.showNotification('warning', 'Please add product(s) to proceed.');
+                        return
+                    }
                     const products = new Accordion({ droppable: false });
-                    this.page = 'selection';
                     this.POModal.modal.querySelector('.modal-title').innerHTML = 'Selection';
                     this.POModal.modal.querySelector('.search-input').classList.add('hide');
                     this.POModal.render(products.render({ items: productSelected }));
+                    this.page = 'selection';
+                } else {
+                    this.showNotification('warning', 'Please add product(s) to proceed.');
                 }
             }
         });
@@ -121,6 +134,11 @@ class App {
                 this.POModal.modal.querySelector('.product-selected').innerHTML = `${checked.length} product selected`;
             }
         });
+    }
+
+    showNotification(type = 'success', message = '') {
+        const notification = new Notification();
+        notification.render({ type, message })
     }
 
     reset() {
