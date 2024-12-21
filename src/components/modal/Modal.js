@@ -5,11 +5,12 @@ import './modal.style.css';
 import { debounce } from '../../utils/main.helper';
 
 class Modal {
-    constructor({ title = "Modal Title", prefix = null, onSearch = () => { }, onSubmit = () => { } }) {
+    constructor({ title = "Modal Title", prefix = null, onSearch = () => { }, onSubmit = () => { }, onBack = () => { } }) {
         this.title = title;
         this.prefix = prefix;
         this.onSearch = onSearch;
         this.onSubmit = onSubmit;
+        this.onBack = onBack;
         this.modal = this.createModal();
     }
 
@@ -18,23 +19,26 @@ class Modal {
         modal.classList.add('modal');
         modal.innerHTML = `
             <div class="modal-body">
-                <div class="modal-header">
-                    <div class="modal-title">
-                        <label class="modal-title">${this.title}</label>
-                        <span class="close-button">&times;</span>
-                    </div>
-                    <input type="text" placeholder="Search supplier" class="search-input" />
+            <div class="modal-header">
+                <div class="modal-info">
+                <div>
+                    <button class="back-button">&#8249;</button>
                 </div>
-                <div class="modal-content"></div>
-                <div class="modal-footer">
-                    <div class="modal-prefix">
-                        ${this.prefix}
-                    </div>
-                    <div class="modal-suffix">
-                        <button class="cancel-button">Cancel</button>
-                        <button class="submit-button primary">Add</button>
-                    </div>
+                <label class="modal-title">${this.title}</label>
+                <span class="close-button">&times;</span>
                 </div>
+                <input type="text" placeholder="Search supplier" class="search-input" />
+            </div>
+            <div class="modal-content"></div>
+            <div class="modal-footer">
+                <div class="modal-prefix">
+                ${this.prefix}
+                </div>
+                <div class="modal-suffix">
+                <button class="cancel-button">Cancel</button>
+                <button class="submit-button primary">Add</button>
+                </div>
+            </div>
             </div>
         `;
 
@@ -45,6 +49,14 @@ class Modal {
         modal.querySelector('.search-input').addEventListener('input', debounce((event) => {
             if (typeof this.onSearch === 'function') this.onSearch(event.target.value);
         }, 500));
+
+        modal.querySelector('.back-button').addEventListener('click', () => {
+            this.onBack();
+        });
+
+        modal.querySelector('.submit-button').addEventListener('click', () => {
+            this.onSubmit();
+        });
 
         return modal;
     }

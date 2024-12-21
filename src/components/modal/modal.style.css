@@ -39,19 +39,39 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: auto;
   text-align: center;
   padding: 10px 30px;
   gap: 20px;
 }
 
+.modal-body .modal-header .search-input.hide {
+  display: none;
+}
+
+.modal-body .modal-header .modal-info {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .modal-body .modal-header .close-button {
-  position: absolute;
   font-size: 25px;
   right: 20px;
   top: 18px;
   cursor: pointer;
   color: #7b7b7b;
+}
+
+.modal-body .modal-header .back-button {
+  font-size: 20px;
+  padding: 5px 15px;
+}
+
+.modal-body .modal-header .back-button.hide {
+  display: none;
 }
 
 .modal-body .modal-header .modal-title {

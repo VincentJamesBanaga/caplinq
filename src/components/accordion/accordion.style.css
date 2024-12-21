@@ -38,6 +38,19 @@
   align-items: center;
 }
 
+.accordion-header input[type="number"] {
+  width: 40px !important;
+  height: 3px !important;
+  text-align: right;
+  -moz-appearance: textfield;
+}
+
+.accordion-header input[type="number"]::-webkit-outer-spin-button,
+.accordion-header input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .accordion-details {
   display: flex;
   flex-direction: row;

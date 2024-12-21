@@ -8,7 +8,9 @@ import image from '../../assets/image.png';
 import List from '../list/List';
 
 class Accordion {
-    constructor() {
+    constructor({ droppable = true }) {
+        this.droppable = droppable;
+        this.searchValue = '';
         this.activeIndex = null;
         this.accordion = this.createAccordion({});
     }
@@ -16,7 +18,7 @@ class Accordion {
     createAccordion({ items = [] }) {
         const accordion = document.createElement('div');
         accordion.classList.add('accordion');
-        accordion.innerHTML = items.map((item, index) => this.createAccordionItem(item, index)).join('');
+        accordion.innerHTML = this.filteredItems(items).map((item, index) => this.createAccordionItem(item, index)).join('');
         return accordion;
     }
 
@@ -34,13 +36,17 @@ class Accordion {
                             <span class="accordion-id">SKU: ${item.id}</span>
                         </div>
                     </div>
-                    <span class="accordion-icon">&#8250;</span>
+                    ${this.droppable ? `<span class="accordion-icon">&#8250;</span>` : `<input type="number" min='0' readonly="true" value="${item?.qty ?? 0}" class="list-input" />`}
                 </div>
-                <div class="accordion-content">
-                    ${list.render()}
-                </div>
+                ${this.droppable ? `<div class="accordion-content">${list.render()}</div>` : ``}
             </div>
         `;
+    }
+
+    filteredItems(items) {
+        return items.filter(({ name }) =>
+            name.toLowerCase().includes(this.searchValue.toLowerCase())
+        );
     }
 
     render(props = {}) {

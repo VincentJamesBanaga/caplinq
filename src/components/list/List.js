@@ -25,6 +25,7 @@ class List {
         const li = document.createElement('li');
         li.setAttribute('data-id', id);
         li.setAttribute('data-name', name);
+        li.setAttribute('data-sku', sku);
         li.classList.add('list-item');
         li.innerHTML = `
             <div class="list-details">
@@ -34,7 +35,7 @@ class List {
                     ${sku ? `<span class="list-id">SKU: ${sku}</span>` : ''}
                 </div>
             </div>
-            ${this.input ? `<input type="number" max='100' min='0' class="list-input" />` : `<span>&#8250;</span>`}
+            ${this.input ? `<input type="number" min='0' value="0" class="list-input" />` : `<span>&#8250;</span>`}
         `;
         return li;
     }
